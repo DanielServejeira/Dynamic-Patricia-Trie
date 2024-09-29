@@ -5,7 +5,7 @@ EN-US
 
 How to run:
 Use a C compiler to run the .c main archive "patricia_interface".
-<br>
+<br><br>
 PT-BR
 # Árvore Patricia Dinâmica
 
