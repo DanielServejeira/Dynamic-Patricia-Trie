@@ -1,5 +1,6 @@
-#include<stdio.h>
-#include<locale.h>
+#include <stdio.h>
+#include <locale.h>
+#include <math.h>
 
 #include "patricia_functions.h"
 
@@ -9,7 +10,7 @@ int main() {
 
     //Declarar árvore e variáveis de menu
     Node *patricia_trie = NULL;
-    int language, menu, k;
+    int language, menu, bits_in_key, k, max_value;
 
     //Menu de idiomas (EN-US & PT-BR)
     do{
@@ -30,15 +31,25 @@ int main() {
             system("pause");
             system("cls");
 
+            do {
+                printf("\nHow many bits do you want in the Patricia Trie? ");
+                scanf("%d",&bits_in_key);
+                system("cls");
+            }
+            while(bits_in_key<1);
+
+            max_value = pow(2, bits_in_key) - 1;
+
             //Loop de operações da Árvore Patricia
             do{
-                printf("\n[1] Create Patricia Trie"
+                printf("\nPatricia Trie Operations - %d bits per node\n"
+                       "\n[1] Create Patricia Trie"
                        "\n[2] Destroy Patricia Trie"
                        "\n[3] Search an element"
                        "\n[4] Insert an element"
                        "\n[5] Remove an element"
                        "\n[6] Print Patricia Trie"
-                       "\n[0] Exit\n\n");
+                       "\n[0] Exit\n\n", bits_in_key);
                 scanf("%d",&menu);
 
                 system("cls");
@@ -47,6 +58,7 @@ int main() {
 
                     //Sair do menu
                     case 0:
+                        printf("\n");
                         break;
 
                     //Criar Árvore Patricia
@@ -75,11 +87,11 @@ int main() {
                     //Buscar elemento na Árvore Patricia
                     case 3:
                         if(patricia_trie != NULL) {
-                            if(!is_empty) {
+                            if(!is_empty(patricia_trie)) {
                                 printf("\nType the element you are looking for: ");
                                 scanf("%d",&k);
 
-                                printf("\n\t%d\n", search(patricia_trie, k));
+                                printf("\n\t%d\n", search(patricia_trie, k, bits_in_key));
                             }
                             else printf("\nInsert an element before searching for it!\n");
                         }
@@ -91,10 +103,12 @@ int main() {
                     //Inserir elemento na Árvore Patricia
                     case 4:
                         if(patricia_trie != NULL) {
-                            printf("\nType the element you want to insert: ");
-                            scanf("%d",&k);
+                            do{
+                                printf("\nType the binary element you want to insert (%d bits maximum): ", bits_in_key);
+                                scanf("%d",&k);
+                            }while(k<0 || k>max_value);
 
-                            insertion(patricia_trie, k);
+                            insertion(patricia_trie, k, bits_in_key);
                         }
                         else printf("\nCreate a Patricia Trie before inserting an element!\n");
 
@@ -103,10 +117,26 @@ int main() {
 
                     //Remover elemento na Árvore Patricia
                     case 5:
+                        if(patricia_trie != NULL) {
+                            if(!is_empty(patricia_trie)) {
+                                //remove((*p_trie));
+                            }
+                            else printf("\nInsert an element before removing one!\n");
+                        }
+                        else printf("\nCreate a Patricia Trie before removing an element!\n");
+
                         break;
 
                     //Imprimir Árvore Patricia
                     case 6:
+                        if(patricia_trie != NULL) {
+                            if(!is_empty(patricia_trie)) {
+                                print_patricia(patricia_trie);
+                            }
+                            else printf("\nThe Patricia Trie is empty.\n");
+                        }
+                        else printf("\nCreate a Patricia Trie before printing it!\n");
+
                         printf("\n");
                         break;
 
