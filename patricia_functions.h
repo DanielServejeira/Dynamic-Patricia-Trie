@@ -2,7 +2,7 @@
 #define PATRICIA_FUNCTIONS
 
 typedef struct node{
-    unsigned key; //numero binario
+    unsigned key; //numero binario                      ------------------------> Mudar para char
     int bit; //profundidade do no na arvore
     struct node *left, *right; //ponteiros pra esquerda e direita
 }Node;
