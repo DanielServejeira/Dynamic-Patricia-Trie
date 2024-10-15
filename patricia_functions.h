@@ -16,7 +16,8 @@ Node *recursive_search(Node *p_trie, char *key, int w);
 Node *search(Node *p_trie, char *key);
 Node *recursive_insertion(Node *p_trie, char *key, int w, Node *last);
 void insertion(Node **p_trie, char *key);
-void delete_node(Node *p_trie, char *key, int bits_in_key);
+void delete_node(Node *root, char *key);
+void print_patricia(Node * node, Node * root, int level);
 
 #include "patricia_functions.c"
 

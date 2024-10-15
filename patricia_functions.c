@@ -251,3 +251,32 @@ void delete_node(Node *root, char *key)
 
     free(current);
 }
+
+/**
+ * Function to print the Patricia Trie
+ * @param *node current node
+ * @param *root Patricia trie root
+ * @param int level
+ */
+void print_patricia(Node * node, Node * root, int level){
+
+    if(node->bit == -1){        //juntar os dois?
+            return;
+    }
+    if(node->bit <= root->bit){
+        return;
+    }
+
+    print_patricia(node->right, node, level + 1);
+
+    if(node->bit == 0){
+        printf("%s(%d)(Left-%s, Right- %s)/\t\n", node->key, node->bit, node->left->key, node->right->key);
+    }else{
+
+        for(int i = 0; i < level; i++){
+            printf("   ");
+        }
+        printf("%s(%d)(Left-%s, Right-%s)\n", node->key, node->bit, node->left->key, node->right->key);
+    }
+    print_patricia(node->left, node, level + 1);
+}
